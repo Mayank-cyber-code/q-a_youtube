@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube Transcript Q&A",
+  "version": "1.0",
+  "permissions": ["tabs"],
+  "host_permissions": ["https://www.youtube.com/*"],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
