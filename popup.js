@@ -1,4 +1,4 @@
-const RENDER_API_URL = "https://your-render-url.onrender.com/api/ask"; // Replace with your Render backend API URL
+const RENDER_API_URL = "https://q-a-youtube.onrender.com/api/ask";
 
 document.addEventListener("DOMContentLoaded", () => {
   chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
