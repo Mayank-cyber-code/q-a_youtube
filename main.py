@@ -16,7 +16,7 @@ app.add_middleware(
 # Read ngrok URL from environment variable with fallback default
 LOCAL_TRANSCRIPT_API_URL = os.getenv(
     "LOCAL_TRANSCRIPT_API_URL",
-    "https://4a2c738dbc17.ngrok-free.app/fetch_transcript"  # fallback ngrok URL
+    "https://b2445003ef29.ngrok-free.app/fetch_transcript"  # fallback ngrok URL
 )
 
 def your_qa_chain(transcript: str, question: str) -> str:
