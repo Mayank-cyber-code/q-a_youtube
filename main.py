@@ -1,7 +1,16 @@
 from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 import httpx
 
 app = FastAPI()
+
+# Enable CORS so browser extensions or web apps can access your API
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],   # Use specific origins in production for security
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Updated ngrok public URL for your local transcript fetcher API
 LOCAL_TRANSCRIPT_API_URL = "https://4a2c738dbc17.ngrok-free.app/fetch_transcript"
@@ -9,6 +18,10 @@ LOCAL_TRANSCRIPT_API_URL = "https://4a2c738dbc17.ngrok-free.app/fetch_transcript
 def your_qa_chain(transcript: str, question: str) -> str:
     # Placeholder QA logic — replace with your own LLM/QA system
     return f"Transcript length: {len(transcript)} characters\nQuestion was: {question}"
+
+@app.get("/")
+async def root():
+    return {"message": "YouTube Transcript Q&A backend is running."}
 
 @app.post("/api/ask")
 async def ask(request: Request):
