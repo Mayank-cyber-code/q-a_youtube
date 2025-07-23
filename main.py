@@ -4,7 +4,7 @@ import httpx
 app = FastAPI()
 
 # Updated ngrok public URL for your local transcript fetcher API
-LOCAL_TRANSCRIPT_API_URL = "https://68a9eaf8447d.ngrok-free.app/fetch_transcript"
+LOCAL_TRANSCRIPT_API_URL = "https://4a2c738dbc17.ngrok-free.app/fetch_transcript"
 
 def your_qa_chain(transcript: str, question: str) -> str:
     # Placeholder QA logic — replace with your own LLM/QA system
