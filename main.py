@@ -1,22 +1,26 @@
+import os
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 import httpx
 
 app = FastAPI()
 
-# Enable CORS so browser extensions or web apps can access your API
+# Enable CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],   # Use specific origins in production for security
+    allow_origins=["*"],  # Restrict in production!
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Updated ngrok public URL for your local transcript fetcher API
-LOCAL_TRANSCRIPT_API_URL = "https://4a2c738dbc17.ngrok-free.app/fetch_transcript"
+# Read ngrok URL from environment variable with fallback default
+LOCAL_TRANSCRIPT_API_URL = os.getenv(
+    "LOCAL_TRANSCRIPT_API_URL",
+    "https://4a2c738dbc17.ngrok-free.app/fetch_transcript"  # fallback ngrok URL
+)
 
 def your_qa_chain(transcript: str, question: str) -> str:
-    # Placeholder QA logic — replace with your own LLM/QA system
+    # Replace this with your actual QA or LLM implementation
     return f"Transcript length: {len(transcript)} characters\nQuestion was: {question}"
 
 @app.get("/")
@@ -31,7 +35,6 @@ async def ask(request: Request):
     if not video_url or not question:
         return {"error": "Both video_url and question are required."}
 
-    # Call your local transcript fetcher API via ngrok tunnel
     async with httpx.AsyncClient() as client:
         response = await client.post(LOCAL_TRANSCRIPT_API_URL, json={"video_url": video_url})
         if response.status_code != 200:
@@ -41,6 +44,5 @@ async def ask(request: Request):
         if not transcript:
             return {"error": "Transcript not found"}
 
-    # Run QA logic on the fetched transcript and question
     answer = your_qa_chain(transcript, question)
     return {"answer": answer}
